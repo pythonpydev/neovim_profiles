@@ -1,0 +1,18 @@
+# .gitignore for nvim_setup
+
+# Backup files
+*.backup
+*.bak
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+
+# Neovim runtime files (these should not be in the repo)
+lazy-lock.json
+plugin/
