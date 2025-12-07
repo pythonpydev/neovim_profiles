@@ -66,7 +66,7 @@ This Neovim setup automatically loads the appropriate tools, LSP servers, and ke
 
 ```bash
 # Download the setup script
-curl -o install.sh https://raw.githubusercontent.com/YOUR_USERNAME/nvim_setup/main/install.sh
+curl -o install.sh https://raw.githubusercontent.com/pythonpydev/nvim_setup/main/install.sh
 
 # Make it executable
 chmod +x install.sh
@@ -146,7 +146,7 @@ mv ~/.local/state/nvim ~/.local/state/nvim.backup
 
 ```bash
 # Clone this repository
-git clone https://github.com/YOUR_USERNAME/nvim_setup.git
+git clone https://github.com/pythonpydev/nvim_setup.git
 
 # Create Neovim config directory
 mkdir -p ~/.config/nvim
