@@ -183,10 +183,12 @@ nvim
 
 **Keybindings:**
 - `F5` - Preview with Glow (scrollable side-by-side)
-  - In preview: `j/k` or arrow keys to scroll
-  - `q` to close preview
+  - `j`/`k` or arrow keys to scroll
+  - `gg` to jump to top, `G` to jump to bottom
+  - `Ctrl+d`/`Ctrl+u` for page down/up
   - `r` to refresh preview
-- `F6` - Export to PDF
+  - `q` to close preview
+- `F6` - Export to PDF (requires texlive-xetex for Unicode)
 - `F7` - Export to HTML
 
 **Commands:**
@@ -196,10 +198,10 @@ nvim
 - `:MarkdownHTML` - Export to HTML
 
 **Preview Tips:**
-- The preview updates automatically from the file on disk
+- Preview is fully scrollable - works with large documents
+- Renders with colors and formatting properly
 - Press `r` in the preview window to refresh after saving changes
-- Use normal vim navigation (`j`, `k`, `Ctrl+d`, `Ctrl+u`, `gg`, `G`) to scroll
-- Preview is read-only and scrollable, perfect for large documents
+- No need to press Esc - immediately scrollable!
 
 ### Python Files (`.py`)
 

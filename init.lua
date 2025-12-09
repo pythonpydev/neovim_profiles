@@ -85,31 +85,61 @@ vim.api.nvim_create_autocmd('FileType', {
       
       -- Open preview in a new split
       vim.cmd('botright vsplit')
+      local preview_win = vim.api.nvim_get_current_win()
+      local preview_buf = vim.api.nvim_create_buf(false, true)
+      vim.api.nvim_win_set_buf(preview_win, preview_buf)
       
-      -- Set white background before starting terminal
-      vim.cmd('setlocal winhl=Normal:PreviewNormal,NormalNC:PreviewNormal')
+      -- Set window options
+      vim.api.nvim_win_set_option(preview_win, 'number', false)
+      vim.api.nvim_win_set_option(preview_win, 'relativenumber', false)
+      vim.api.nvim_win_set_option(preview_win, 'wrap', true)
+      vim.api.nvim_win_set_option(preview_win, 'linebreak', true)
+      
+      -- Set white background
+      vim.api.nvim_win_set_option(preview_win, 'winhl', 'Normal:PreviewNormal,NormalNC:PreviewNormal')
       vim.cmd('highlight PreviewNormal guifg=#000000 guibg=#FFFFFF ctermfg=16 ctermbg=231')
       
-      -- Start terminal with glow (without --pager for scrollback buffer)
-      vim.fn.termopen('glow --style ' .. vim.fn.shellescape(style_path) .. ' ' .. vim.fn.shellescape(file))
+      -- Get glow output with proper terminal handling
+      local handle = io.popen('TERM=xterm-256color glow --style ' .. vim.fn.shellescape(style_path) .. ' ' .. vim.fn.shellescape(file) .. ' 2>&1')
+      local output = handle:read("*a")
+      handle:close()
       
-      -- Set terminal scrollback
-      vim.opt_local.scrollback = 100000
+      -- Split output into lines
+      local lines = {}
+      for line in output:gmatch("[^\r\n]+") do
+        table.insert(lines, line)
+      end
       
-      -- Go to normal mode immediately for scrolling
-      vim.cmd('startinsert')
-      vim.defer_fn(function()
-        vim.cmd('stopinsert')
-      end, 100)
+      -- Set buffer content
+      vim.api.nvim_buf_set_lines(preview_buf, 0, -1, false, lines)
       
-      local buf = vim.api.nvim_get_current_buf()
+      -- Make buffer read-only but scrollable
+      vim.api.nvim_buf_set_option(preview_buf, 'modifiable', false)
+      vim.api.nvim_buf_set_option(preview_buf, 'buftype', 'nofile')
+      vim.api.nvim_buf_set_option(preview_buf, 'bufhidden', 'wipe')
+      vim.api.nvim_buf_set_option(preview_buf, 'filetype', 'markdown-preview')
       
-      -- Add keybindings - use terminal-specific mappings
-      vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { buffer = buf, silent = true, desc = "Enter normal mode" })
-      vim.keymap.set('n', 'q', ':q<CR>', { buffer = buf, silent = true, desc = "Close preview" })
-      vim.keymap.set('n', 'r', '<cmd>edit<CR>', { buffer = buf, silent = true, desc = "Refresh preview" })
+      -- Enable ANSI color codes rendering
+      vim.cmd('AnsiEsc')
       
-      vim.notify('Preview: <Esc> for normal mode, then j/k to scroll, q=quit', vim.log.levels.INFO)
+      -- Add keybindings
+      vim.keymap.set('n', 'q', ':q<CR>', { buffer = preview_buf, silent = true, desc = "Close preview" })
+      vim.keymap.set('n', 'r', function()
+        -- Refresh preview
+        vim.api.nvim_buf_set_option(preview_buf, 'modifiable', true)
+        local h = io.popen('TERM=xterm-256color glow --style ' .. vim.fn.shellescape(style_path) .. ' ' .. vim.fn.shellescape(file) .. ' 2>&1')
+        local new_output = h:read("*a")
+        h:close()
+        local new_lines = {}
+        for line in new_output:gmatch("[^\r\n]+") do
+          table.insert(new_lines, line)
+        end
+        vim.api.nvim_buf_set_lines(preview_buf, 0, -1, false, new_lines)
+        vim.api.nvim_buf_set_option(preview_buf, 'modifiable', false)
+        vim.cmd('AnsiEsc')
+      end, { buffer = preview_buf, silent = true, desc = "Refresh preview" })
+      
+      vim.notify('Preview: j/k to scroll, r=refresh, q=quit', vim.log.levels.INFO)
     end, { buffer = true, silent = true, desc = "Preview markdown" })
     
     -- F6: PDF Export
@@ -175,30 +205,60 @@ vim.api.nvim_create_user_command('MarkdownPreview', function()
   
   -- Open preview in a new split
   vim.cmd('botright vsplit')
+  local preview_win = vim.api.nvim_get_current_win()
+  local preview_buf = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_win_set_buf(preview_win, preview_buf)
+  
+  -- Set window options
+  vim.api.nvim_win_set_option(preview_win, 'number', false)
+  vim.api.nvim_win_set_option(preview_win, 'relativenumber', false)
+  vim.api.nvim_win_set_option(preview_win, 'wrap', true)
+  vim.api.nvim_win_set_option(preview_win, 'linebreak', true)
   
   -- Set white background
-  vim.cmd('setlocal winhl=Normal:PreviewNormal,NormalNC:PreviewNormal')
+  vim.api.nvim_win_set_option(preview_win, 'winhl', 'Normal:PreviewNormal,NormalNC:PreviewNormal')
   vim.cmd('highlight PreviewNormal guifg=#000000 guibg=#FFFFFF ctermfg=16 ctermbg=231')
   
-  -- Start terminal with glow
-  vim.fn.termopen('glow --style ' .. vim.fn.shellescape(style_path) .. ' ' .. vim.fn.shellescape(file))
+  -- Get glow output
+  local handle = io.popen('TERM=xterm-256color glow --style ' .. vim.fn.shellescape(style_path) .. ' ' .. vim.fn.shellescape(file) .. ' 2>&1')
+  local output = handle:read("*a")
+  handle:close()
   
-  -- Set large scrollback
-  vim.opt_local.scrollback = 100000
+  -- Split into lines
+  local lines = {}
+  for line in output:gmatch("[^\r\n]+") do
+    table.insert(lines, line)
+  end
   
-  -- Enter normal mode after brief delay
-  vim.cmd('startinsert')
-  vim.defer_fn(function()
-    vim.cmd('stopinsert')
-  end, 100)
+  -- Set buffer content
+  vim.api.nvim_buf_set_lines(preview_buf, 0, -1, false, lines)
   
-  local buf = vim.api.nvim_get_current_buf()
+  -- Make read-only
+  vim.api.nvim_buf_set_option(preview_buf, 'modifiable', false)
+  vim.api.nvim_buf_set_option(preview_buf, 'buftype', 'nofile')
+  vim.api.nvim_buf_set_option(preview_buf, 'bufhidden', 'wipe')
+  vim.api.nvim_buf_set_option(preview_buf, 'filetype', 'markdown-preview')
+  
+  -- Render ANSI colors
+  vim.cmd('AnsiEsc')
   
   -- Add keybindings
-  vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { buffer = buf, silent = true, desc = "Enter normal mode" })
-  vim.keymap.set('n', 'q', ':q<CR>', { buffer = buf, silent = true, desc = "Close preview" })
+  vim.keymap.set('n', 'q', ':q<CR>', { buffer = preview_buf, silent = true, desc = "Close preview" })
+  vim.keymap.set('n', 'r', function()
+    vim.api.nvim_buf_set_option(preview_buf, 'modifiable', true)
+    local h = io.popen('TERM=xterm-256color glow --style ' .. vim.fn.shellescape(style_path) .. ' ' .. vim.fn.shellescape(file) .. ' 2>&1')
+    local new_output = h:read("*a")
+    h:close()
+    local new_lines = {}
+    for line in new_output:gmatch("[^\r\n]+") do
+      table.insert(new_lines, line)
+    end
+    vim.api.nvim_buf_set_lines(preview_buf, 0, -1, false, new_lines)
+    vim.api.nvim_buf_set_option(preview_buf, 'modifiable', false)
+    vim.cmd('AnsiEsc')
+  end, { buffer = preview_buf, silent = true, desc = "Refresh preview" })
   
-  vim.notify('Preview: <Esc> for normal mode, then j/k to scroll, q=quit', vim.log.levels.INFO)
+  vim.notify('Preview: j/k to scroll, r=refresh, q=quit', vim.log.levels.INFO)
 end, { desc = "Preview markdown with glow" })
 
 -- :MarkdownPreviewExternal - Open in external terminal (best colors)
@@ -287,6 +347,12 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Plugin setup with lazy.nvim
 require("lazy").setup({
+  -- ANSI escape code rendering for terminal colors in buffers
+  {
+    "powerman/vim-plugin-AnsiEsc",
+    cmd = "AnsiEsc",
+  },
+
   -- File tree explorer (always available)
   {
     "nvim-tree/nvim-tree.lua",

@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.3] - 2025-12-09
+
+### Fixed
+
+- **Markdown preview full scrolling support**
+  - Now uses regular buffer instead of terminal buffer
+  - Complete scrolling access to entire document (top to bottom)
+  - Fixed issue where cursor stopped at window top
+  - No need to press Esc - immediately scrollable
+
+### Added
+
+- **AnsiEsc plugin** for proper ANSI color code rendering
+  - Glow output now displays with proper colors
+  - Clean, readable preview formatting
+
+### Changed
+
+- Preview implementation switched from `termopen()` to `io.popen()`
+- Captures full glow output in scrollable buffer
+- Simplified keybindings - no terminal mode needed
+
+### Improved
+
+- Better preview UX - use `j/k`, `gg`, `G`, `Ctrl+d/u` immediately
+- Works perfectly with large markdown documents
+- Refresh function (`r`) now properly re-renders
+
+---
+
 ## [2.0.2] - 2025-12-09
 
 ### Fixed
