@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.2] - 2025-12-09
+
+### Fixed
+
+- **PDF export Unicode support**
+  - Changed from pdflatex to xelatex for proper Unicode character handling
+  - Fixes errors with characters like ≈, ±, Greek letters, etc.
+  - Now handles international characters and mathematical symbols correctly
+
+### Changed
+
+- PDF export now uses `--pdf-engine=xelatex` instead of `--pdf-engine=pdflatex`
+- Updated install script to include `texlive-xetex` package
+- Documentation updated with XeLaTeX requirement
+
+### Installation
+
+If you already have the setup installed, add XeLaTeX support:
+```bash
+sudo apt install texlive-xetex
+```
+
+---
+
 ## [2.0.1] - 2025-12-09
 
 ### Fixed

@@ -115,8 +115,8 @@ print_success "Essential dependencies installed"
 # Install Markdown tools
 print_header "Step 5: Installing Markdown Tools"
 print_info "Installing pandoc and LaTeX for PDF export..."
-sudo apt install -y pandoc texlive-latex-base texlive-latex-recommended
-print_success "Markdown tools installed"
+sudo apt install -y pandoc texlive-latex-base texlive-latex-recommended texlive-xetex
+print_success "Markdown tools installed (with XeLaTeX for Unicode support)"
 
 # Install Glow
 print_info "Installing glow (Markdown preview)..."

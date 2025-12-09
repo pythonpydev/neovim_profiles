@@ -110,8 +110,8 @@ nvim --version
 # Essential build tools
 sudo apt install build-essential git curl nodejs npm python3 python3-pip
 
-# Markdown tools
-sudo apt install pandoc texlive-latex-base texlive-latex-recommended
+# Markdown tools (including XeLaTeX for Unicode PDF support)
+sudo apt install pandoc texlive-latex-base texlive-latex-recommended texlive-xetex
 
 # Shell script tools
 sudo apt install shellcheck
