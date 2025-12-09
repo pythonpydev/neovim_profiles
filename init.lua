@@ -82,18 +82,42 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.keymap.set('n', '<F5>', function()
       local file = vim.fn.expand('%:p')
       local style_path = vim.fn.expand('~/.config/glow/styles/light-preview.json')
+      
       -- Open preview in a new split
       vim.cmd('botright vsplit')
+      local preview_win = vim.api.nvim_get_current_win()
+      local preview_buf = vim.api.nvim_create_buf(false, true)
+      vim.api.nvim_win_set_buf(preview_win, preview_buf)
       
-      -- Set white background for this window before starting terminal
+      -- Set white background for this window
       vim.cmd('setlocal winhl=Normal:PreviewNormal,NormalNC:PreviewNormal')
       vim.cmd('highlight PreviewNormal guifg=#000000 guibg=#FFFFFF ctermfg=16 ctermbg=231')
       
-      -- Start glow with custom light style (black bold headings, no # symbols)
-      vim.cmd('terminal glow --style ' .. vim.fn.shellescape(style_path) .. ' ' .. vim.fn.shellescape(file))
+      -- Run glow and capture output
+      local output = vim.fn.systemlist('glow --style ' .. vim.fn.shellescape(style_path) .. ' ' .. vim.fn.shellescape(file))
       
-      -- Ensure terminal uses light colors
-      vim.cmd('setlocal termguicolors')
+      -- Set buffer content
+      vim.api.nvim_buf_set_lines(preview_buf, 0, -1, false, output)
+      
+      -- Make buffer read-only and scrollable
+      vim.api.nvim_buf_set_option(preview_buf, 'modifiable', false)
+      vim.api.nvim_buf_set_option(preview_buf, 'buftype', 'nofile')
+      vim.api.nvim_buf_set_option(preview_buf, 'bufhidden', 'wipe')
+      vim.api.nvim_win_set_option(preview_win, 'wrap', true)
+      vim.api.nvim_win_set_option(preview_win, 'number', false)
+      vim.api.nvim_win_set_option(preview_win, 'relativenumber', false)
+      
+      -- Add keybindings for easy navigation in preview window
+      vim.keymap.set('n', 'q', ':q<CR>', { buffer = preview_buf, silent = true, desc = "Close preview" })
+      vim.keymap.set('n', 'r', function()
+        -- Refresh preview
+        vim.api.nvim_buf_set_option(preview_buf, 'modifiable', true)
+        local new_output = vim.fn.systemlist('glow --style ' .. vim.fn.shellescape(style_path) .. ' ' .. vim.fn.shellescape(file))
+        vim.api.nvim_buf_set_lines(preview_buf, 0, -1, false, new_output)
+        vim.api.nvim_buf_set_option(preview_buf, 'modifiable', false)
+      end, { buffer = preview_buf, silent = true, desc = "Refresh preview" })
+      
+      vim.notify('Preview: q=quit, r=refresh, j/k=scroll', vim.log.levels.INFO)
     end, { buffer = true, silent = true, desc = "Preview markdown" })
     
     -- F6: PDF Export
@@ -147,15 +171,49 @@ vim.api.nvim_create_autocmd('FileType', {
 -- USER COMMANDS (Alternative to F-keys)
 -- ===============================================
 
--- :MarkdownPreview - Preview with glow (side-by-side)
+-- :MarkdownPreview - Preview with glow (side-by-side, scrollable)
 vim.api.nvim_create_user_command('MarkdownPreview', function()
   if vim.bo.filetype ~= 'markdown' then
     vim.notify('This command is only for markdown files', vim.log.levels.WARN)
     return
   end
   local file = vim.fn.expand('%:p')
-  local style_path = vim.fn.expand('~/.config/glow/styles/notepadpp.json')
-  vim.cmd('botright vsplit | terminal glow --style ' .. vim.fn.shellescape(style_path) .. ' ' .. vim.fn.shellescape(file))
+  local style_path = vim.fn.expand('~/.config/glow/styles/light-preview.json')
+  
+  -- Open preview in a new split
+  vim.cmd('botright vsplit')
+  local preview_win = vim.api.nvim_get_current_win()
+  local preview_buf = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_win_set_buf(preview_win, preview_buf)
+  
+  -- Set white background
+  vim.cmd('setlocal winhl=Normal:PreviewNormal,NormalNC:PreviewNormal')
+  vim.cmd('highlight PreviewNormal guifg=#000000 guibg=#FFFFFF ctermfg=16 ctermbg=231')
+  
+  -- Run glow and capture output
+  local output = vim.fn.systemlist('glow --style ' .. vim.fn.shellescape(style_path) .. ' ' .. vim.fn.shellescape(file))
+  
+  -- Set buffer content
+  vim.api.nvim_buf_set_lines(preview_buf, 0, -1, false, output)
+  
+  -- Make buffer read-only and scrollable
+  vim.api.nvim_buf_set_option(preview_buf, 'modifiable', false)
+  vim.api.nvim_buf_set_option(preview_buf, 'buftype', 'nofile')
+  vim.api.nvim_buf_set_option(preview_buf, 'bufhidden', 'wipe')
+  vim.api.nvim_win_set_option(preview_win, 'wrap', true)
+  vim.api.nvim_win_set_option(preview_win, 'number', false)
+  vim.api.nvim_win_set_option(preview_win, 'relativenumber', false)
+  
+  -- Add keybindings
+  vim.keymap.set('n', 'q', ':q<CR>', { buffer = preview_buf, silent = true, desc = "Close preview" })
+  vim.keymap.set('n', 'r', function()
+    vim.api.nvim_buf_set_option(preview_buf, 'modifiable', true)
+    local new_output = vim.fn.systemlist('glow --style ' .. vim.fn.shellescape(style_path) .. ' ' .. vim.fn.shellescape(file))
+    vim.api.nvim_buf_set_lines(preview_buf, 0, -1, false, new_output)
+    vim.api.nvim_buf_set_option(preview_buf, 'modifiable', false)
+  end, { buffer = preview_buf, silent = true, desc = "Refresh preview" })
+  
+  vim.notify('Preview: q=quit, r=refresh, j/k=scroll', vim.log.levels.INFO)
 end, { desc = "Preview markdown with glow" })
 
 -- :MarkdownPreviewExternal - Open in external terminal (best colors)

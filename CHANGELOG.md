@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.1] - 2025-12-09
+
+### Fixed
+
+- **Markdown preview scrolling issue**
+  - Preview window is now fully scrollable with normal vim keybindings
+  - Changed from terminal buffer to regular buffer with glow output
+  - Can now navigate large markdown files with `j`, `k`, `Ctrl+d`, `Ctrl+u`, `gg`, `G`
+  
+### Added
+
+- **Preview keybindings**
+  - `q` to close preview window
+  - `r` to refresh preview after saving changes
+  - Notification showing available keybindings when preview opens
+
+### Improved
+
+- Preview is now read-only but scrollable
+- Better user experience for reviewing large documents
+- Preview window uses consistent light theme styling
+
+---
+
 ## [2.0.0] - 2025-12-09
 
 ### Major Changes - Breaking

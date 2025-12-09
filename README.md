@@ -182,14 +182,24 @@ nvim
 ### Markdown Files (`.md`)
 
 **Keybindings:**
-- `F5` - Preview with Glow
+- `F5` - Preview with Glow (scrollable side-by-side)
+  - In preview: `j/k` or arrow keys to scroll
+  - `q` to close preview
+  - `r` to refresh preview
 - `F6` - Export to PDF
 - `F7` - Export to HTML
 
 **Commands:**
-- `:MarkdownPreview` - Side-by-side preview
+- `:MarkdownPreview` - Side-by-side scrollable preview
+- `:MarkdownPreviewExternal` - Open in external terminal
 - `:MarkdownPDF` - Export to PDF
 - `:MarkdownHTML` - Export to HTML
+
+**Preview Tips:**
+- The preview updates automatically from the file on disk
+- Press `r` in the preview window to refresh after saving changes
+- Use normal vim navigation (`j`, `k`, `Ctrl+d`, `Ctrl+u`, `gg`, `G`) to scroll
+- Preview is read-only and scrollable, perfect for large documents
 
 ### Python Files (`.py`)
 
