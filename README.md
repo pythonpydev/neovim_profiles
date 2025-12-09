@@ -36,8 +36,11 @@ This Neovim setup automatically loads the appropriate tools, LSP servers, and ke
 - **nvim-cmp**: Autocompletion engine
 - **LuaSnip**: Snippet engine
 - **Treesitter**: Advanced syntax parsing
+- **nvim-lint**: Linting framework (replaces null-ls)
+- **conform.nvim**: Formatting framework
 
 ### Language Servers (LSP)
+- Uses native **vim.lsp.config** API (Neovim 0.11+)
 - `pyright` - Python
 - `bashls` - Bash/Shell
 - `clangd` - C/C++
@@ -48,8 +51,8 @@ This Neovim setup automatically loads the appropriate tools, LSP servers, and ke
 ### Additional Tools
 - `glow` - Markdown preview
 - `pandoc` - Markdown to PDF/HTML conversion
-- `shellcheck` - Shell script linting
-- `shfmt` - Shell script formatting
+- `shellcheck` - Shell script linting (optional)
+- `shfmt` - Shell script formatting (optional)
 - `black` - Python code formatting
 
 ---
@@ -86,7 +89,7 @@ The script will:
 
 ## 🛠️ Manual Installation
 
-### Step 1: Install Neovim 0.10.0+
+### Step 1: Install Neovim 0.11.0+
 
 #### Ubuntu/Debian
 ```bash
@@ -98,7 +101,7 @@ sudo apt install neovim
 #### Verify Installation
 ```bash
 nvim --version
-# Should show version 0.10.0 or higher
+# Should show version 0.11.0 or higher (required for vim.lsp.config API)
 ```
 
 ### Step 2: Install Required Dependencies
@@ -336,11 +339,16 @@ nvim
 
 ### Neovim Version Too Old
 
+**Note:** This configuration requires Neovim 0.11.0+ for the modern vim.lsp.config API.
+
 ```bash
 # Upgrade to latest Neovim
 sudo add-apt-repository ppa:neovim-ppa/unstable
 sudo apt update
 sudo apt upgrade neovim
+
+# Verify version
+nvim --version  # Should be 0.11.0 or higher
 ```
 
 ---
@@ -382,9 +390,12 @@ MIT License - feel free to use and modify!
 
 Built with these amazing plugins:
 - [lazy.nvim](https://github.com/folke/lazy.nvim) - Plugin manager
-- [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) - LSP configurations
+- [Mason](https://github.com/williamboman/mason.nvim) - LSP installer
 - [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) - Autocompletion
 - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) - Syntax highlighting
+- [nvim-lint](https://github.com/mfussenegger/nvim-lint) - Linting framework
+- [conform.nvim](https://github.com/stevearc/conform.nvim) - Formatting framework
+- Uses native **vim.lsp.config** API (Neovim 0.11+)
 - And many more incredible plugins!
 
 ---
@@ -394,7 +405,8 @@ Built with these amazing plugins:
 If you encounter issues:
 1. Check the [Troubleshooting](#-troubleshooting) section
 2. Open an issue on GitHub
-3. Make sure you're running Neovim 0.10.0+
+3. Make sure you're running Neovim 0.11.0+ (required for vim.lsp.config API)
+4. For shell script linting, ensure shellcheck is installed: `sudo apt install shellcheck`
 
 ---
 

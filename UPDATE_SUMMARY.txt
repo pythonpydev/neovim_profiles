@@ -1,0 +1,83 @@
+════════════════════════════════════════════════════════════════
+  NEOVIM SETUP - UPDATE SUMMARY
+  Version 2.0.0 - December 9, 2025
+════════════════════════════════════════════════════════════════
+
+📁 FILES UPDATED:
+
+✓ init.lua         - Main configuration (vim.lsp.config API)
+✓ README.md        - Updated documentation
+✓ install.sh       - Enhanced installer with version checking
+✓ CHANGELOG.md     - New file documenting all changes
+✓ MIGRATION.md     - New migration guide for upgrading
+
+════════════════════════════════════════════════════════════════
+
+🔧 KEY CHANGES:
+
+1. LSP Configuration
+   OLD: require('lspconfig').bashls.setup({...})
+   NEW: vim.lsp.config.bashls = {...}
+   
+   ✓ Uses native Neovim 0.11+ API
+   ✓ No more deprecation warnings
+   ✓ Removed nvim-lspconfig dependency
+
+2. Linting & Formatting
+   OLD: null-ls.nvim (archived)
+   NEW: nvim-lint + conform.nvim (actively maintained)
+   
+   ✓ Better maintained plugins
+   ✓ More reliable long-term
+
+3. Shell Script Tools
+   ✓ shellcheck is now optional
+   ✓ shfmt is now optional
+   ✓ No errors if tools are missing
+   ✓ Graceful degradation
+
+════════════════════════════════════════════════════════════════
+
+⚠️  REQUIREMENTS:
+
+• Neovim 0.11.0 or higher (REQUIRED)
+• shellcheck (optional, for .sh linting)
+• shfmt (optional, for .sh formatting)
+
+Check version: nvim --version
+
+════════════════════════════════════════════════════════════════
+
+✨ WHAT'S FIXED:
+
+✓ No more deprecation warnings when opening .sh files
+✓ No more "framework is deprecated" errors
+✓ No more null-ls compatibility errors
+✓ Better compatibility with Neovim 0.12.0-dev
+
+════════════════════════════════════════════════════════════════
+
+📖 DOCUMENTATION:
+
+• README.md      - Complete setup guide
+• CHANGELOG.md   - Detailed version history
+• MIGRATION.md   - Upgrade instructions
+• CONTRIBUTING.md - Contribution guidelines
+
+════════════════════════════════════════════════════════════════
+
+🚀 QUICK START:
+
+Fresh install:
+  cd /home/ed/MEGA/nvim_setup
+  ./install.sh
+
+Existing setup:
+  1. Backup: mv ~/.config/nvim ~/.config/nvim.backup
+  2. Install: cp init.lua ~/.config/nvim/
+  3. Launch: nvim
+
+════════════════════════════════════════════════════════════════
+
+All functionality remains the same - just modernized under the hood!
+

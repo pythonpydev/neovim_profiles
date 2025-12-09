@@ -73,16 +73,21 @@ print_header "Step 3: Installing Neovim"
 if command -v nvim &> /dev/null; then
     NVIM_VERSION=$(nvim --version | head -n 1 | cut -d' ' -f2)
     print_info "Neovim $NVIM_VERSION already installed"
-    read -p "Upgrade to latest version? (y/n) " -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
+    
+    # Check if version is sufficient (0.11.0+)
+    REQUIRED_VERSION="0.11.0"
+    if printf '%s\n%s\n' "$REQUIRED_VERSION" "$NVIM_VERSION" | sort -V -C; then
+        print_success "Neovim version $NVIM_VERSION meets requirement (0.11.0+)"
+    else
+        print_error "Neovim version $NVIM_VERSION is too old (requires 0.11.0+)"
+        print_info "Upgrading to latest version..."
         sudo add-apt-repository ppa:neovim-ppa/unstable -y
         sudo apt update
         sudo apt install -y neovim
         print_success "Neovim upgraded"
     fi
 else
-    print_info "Installing Neovim..."
+    print_info "Installing Neovim 0.11.0+..."
     sudo add-apt-repository ppa:neovim-ppa/unstable -y
     sudo apt update
     sudo apt install -y neovim
@@ -130,22 +135,34 @@ fi
 mkdir -p "$HOME/.config/glow/styles"
 
 # Install Shell script tools
-print_header "Step 6: Installing Shell Script Tools"
-print_info "Installing shellcheck..."
-sudo apt install -y shellcheck
-print_success "ShellCheck installed"
+print_header "Step 6: Installing Shell Script Tools (Optional)"
+print_info "Installing shellcheck (optional for shell script linting)..."
+read -p "Install shellcheck? (recommended) (y/n) " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    sudo apt install -y shellcheck
+    print_success "ShellCheck installed"
+else
+    print_info "Skipping shellcheck (can install later: sudo apt install shellcheck)"
+fi
 
-print_info "Installing shfmt..."
-if ! command -v shfmt &> /dev/null; then
-    if command -v go &> /dev/null; then
-        GO111MODULE=on go install mvdan.cc/sh/v3/cmd/shfmt@latest
-        print_success "shfmt installed via Go"
+print_info "Installing shfmt (optional for shell script formatting)..."
+read -p "Install shfmt? (recommended) (y/n) " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    if ! command -v shfmt &> /dev/null; then
+        if command -v go &> /dev/null; then
+            GO111MODULE=on go install mvdan.cc/sh/v3/cmd/shfmt@latest
+            print_success "shfmt installed via Go"
+        else
+            print_info "Go not found, shfmt can be installed via Mason in Neovim"
+            print_success "shfmt will be available after first Neovim launch"
+        fi
     else
-        print_info "Go not found, shfmt will be installed via Mason in Neovim"
-        print_success "shfmt will be available after first Neovim launch"
+        print_success "shfmt already installed"
     fi
 else
-    print_success "shfmt already installed"
+    print_info "Skipping shfmt"
 fi
 
 # Install Python tools
@@ -219,6 +236,12 @@ print_header "✨ Installation Complete!"
 echo ""
 print_success "Neovim multi-language profile setup is now installed!"
 echo ""
+print_info "Configuration details:"
+echo "  • Uses native vim.lsp.config API (Neovim 0.11+)"
+echo "  • LSP servers managed by Mason"
+echo "  • Linting via nvim-lint"
+echo "  • Formatting via conform.nvim"
+echo ""
 print_info "Next steps:"
 echo "  1. Start Neovim: nvim"
 echo "  2. Wait for remaining plugins to load"
@@ -228,7 +251,11 @@ echo ""
 print_info "Quick test:"
 echo "  nvim test.py    # Test Python profile"
 echo "  nvim test.md    # Test Markdown profile"
+echo "  nvim test.sh    # Test Shell script profile"
 echo "  nvim test.html  # Test HTML profile"
+echo ""
+print_info "Optional: Install shellcheck for shell script linting:"
+echo "  sudo apt install shellcheck"
 echo ""
 print_info "For help, see: https://github.com/pythonpydev/nvim_setup"
 echo ""

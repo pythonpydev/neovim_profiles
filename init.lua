@@ -1,5 +1,46 @@
 -- ~/.config/nvim/init.lua
 
+-- Use existing Vim configuration
+vim.opt.runtimepath:prepend('~/.vim')
+vim.opt.runtimepath:append('~/.vim/after')
+vim.opt.packpath = vim.opt.runtimepath:get()[1]
+vim.cmd('source ~/.vimrc.backup')  -- Load old settings
+
+-- ===============================================
+-- TERMINAL & COLOR SETTINGS
+-- ===============================================
+-- Enable true colors in terminal (gnome-terminal supports this)
+vim.opt.termguicolors = true
+
+-- Always use light background
+vim.opt.background = 'light'
+
+-- Set light theme colors
+vim.cmd('highlight CursorLine guibg=#E8E8E8 ctermbg=254 cterm=NONE gui=NONE')
+vim.cmd('highlight CursorLineNr guifg=#D75F00 guibg=#E8E8E8 ctermfg=166 ctermbg=254 cterm=bold gui=bold')
+vim.cmd('highlight Visual guibg=#D0D0D0 guifg=NONE ctermbg=252 ctermfg=NONE')
+vim.cmd('highlight Normal guifg=#2E2E2E guibg=#FFFFFF ctermfg=236 ctermbg=231')
+
+-- Set message colors for light background
+vim.cmd('highlight MoreMsg guifg=#FF0000 gui=bold ctermfg=196 cterm=bold')
+vim.cmd('highlight Question guifg=#FF0000 gui=bold ctermfg=196 cterm=bold')
+
+-- Set markdown heading colors - bold orange for all headings
+vim.cmd('highlight markdownH1 guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+vim.cmd('highlight markdownH2 guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+vim.cmd('highlight markdownH3 guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+vim.cmd('highlight markdownH4 guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+vim.cmd('highlight markdownH5 guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+vim.cmd('highlight markdownH6 guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+vim.cmd('highlight markdownHeadingDelimiter guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+vim.cmd('highlight @markup.heading.1.markdown guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+vim.cmd('highlight @markup.heading.2.markdown guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+vim.cmd('highlight @markup.heading.3.markdown guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+vim.cmd('highlight @markup.heading.4.markdown guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+vim.cmd('highlight @markup.heading.5.markdown guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+vim.cmd('highlight @markup.heading.6.markdown guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+vim.cmd('highlight @markup.heading.marker.markdown guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+
 -- Override old F5/F6/F7 mappings with autocmd that runs after FileType
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'markdown',
@@ -9,21 +50,50 @@ vim.api.nvim_create_autocmd('FileType', {
     pcall(vim.api.nvim_buf_del_keymap, 0, 'n', '<F6>')
     pcall(vim.api.nvim_buf_del_keymap, 0, 'n', '<F7>')
     
-    -- Override markdown H1 color to orange
-    vim.cmd('highlight markdownH1 guifg=#FF8700 gui=bold cterm=bold ctermfg=208')
-    vim.cmd('highlight markdownHeadingDelimiter guifg=#C0C0C0 gui=bold cterm=bold ctermfg=250')
-    vim.cmd('highlight markdownH2 guifg=#8B0000 gui=bold cterm=bold ctermfg=88')
-    vim.cmd('highlight markdownH3 guifg=#AF00FF gui=bold cterm=bold ctermfg=129')
-    vim.cmd('highlight markdownH4 guifg=#00008B gui=bold cterm=bold ctermfg=18')
-    vim.cmd('highlight markdownH5 guifg=#87CEEB gui=bold cterm=bold ctermfg=117')
-    vim.cmd('highlight markdownH6 guifg=#696969 gui=bold cterm=bold ctermfg=242')
+    -- Override markdown heading colors - bold orange for all headings
+    -- Apply to both standard syntax and treesitter
+    vim.cmd('highlight markdownH1 guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+    vim.cmd('highlight markdownH2 guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+    vim.cmd('highlight markdownH3 guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+    vim.cmd('highlight markdownH4 guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+    vim.cmd('highlight markdownH5 guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+    vim.cmd('highlight markdownH6 guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+    vim.cmd('highlight markdownHeadingDelimiter guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+    
+    -- Treesitter markdown headings (override treesitter highlighting)
+    vim.cmd('highlight @markup.heading.1.markdown guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+    vim.cmd('highlight @markup.heading.2.markdown guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+    vim.cmd('highlight @markup.heading.3.markdown guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+    vim.cmd('highlight @markup.heading.4.markdown guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+    vim.cmd('highlight @markup.heading.5.markdown guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+    vim.cmd('highlight @markup.heading.6.markdown guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+    vim.cmd('highlight @markup.heading.marker.markdown guifg=#FF8700 guibg=NONE gui=bold cterm=bold ctermfg=208')
+    
+    -- Light theme markdown colors
+    vim.cmd('highlight markdownCode guifg=#005F00 guibg=#F0F0F0 ctermfg=22 ctermbg=255')
+    vim.cmd('highlight markdownCodeBlock guifg=#005F00 guibg=#F0F0F0 ctermfg=22 ctermbg=255')
+    vim.cmd('highlight markdownBold guifg=#AF5F00 gui=bold ctermfg=130 cterm=bold')
+    vim.cmd('highlight markdownItalic guifg=#005FAF gui=italic ctermfg=25 cterm=italic')
+    vim.cmd('highlight markdownListMarker guifg=#D75F00 ctermfg=166')
+    vim.cmd('highlight markdownUrl guifg=#0000FF gui=underline ctermfg=21 cterm=underline')
     
     -- Set our new mappings
-    -- F5: Preview
+    -- F5: Preview (always light mode with black bold headings)
     vim.keymap.set('n', '<F5>', function()
       local file = vim.fn.expand('%:p')
-      local style_path = vim.fn.expand('~/.config/glow/styles/notepadpp.json')
-      vim.cmd('botright vsplit | terminal glow --style ' .. vim.fn.shellescape(style_path) .. ' ' .. vim.fn.shellescape(file))
+      local style_path = vim.fn.expand('~/.config/glow/styles/light-preview.json')
+      -- Open preview in a new split
+      vim.cmd('botright vsplit')
+      
+      -- Set white background for this window before starting terminal
+      vim.cmd('setlocal winhl=Normal:PreviewNormal,NormalNC:PreviewNormal')
+      vim.cmd('highlight PreviewNormal guifg=#000000 guibg=#FFFFFF ctermfg=16 ctermbg=231')
+      
+      -- Start glow with custom light style (black bold headings, no # symbols)
+      vim.cmd('terminal glow --style ' .. vim.fn.shellescape(style_path) .. ' ' .. vim.fn.shellescape(file))
+      
+      -- Ensure terminal uses light colors
+      vim.cmd('setlocal termguicolors')
     end, { buffer = true, silent = true, desc = "Preview markdown" })
     
     -- F6: PDF Export
@@ -95,13 +165,8 @@ vim.api.nvim_create_user_command('MarkdownPreviewExternal', function()
     return
   end
   local file = vim.fn.expand('%:p')
-  -- Detect available terminal emulator and open with glow
-  local terminal = os.getenv("TERM_PROGRAM") or "xterm"
-  local term_cmd = vim.fn.executable("gnome-terminal") == 1 and "gnome-terminal --" 
-                or vim.fn.executable("xfce4-terminal") == 1 and "xfce4-terminal -e"
-                or vim.fn.executable("xterm") == 1 and "xterm -e"
-                or "x-terminal-emulator -e"
-  vim.fn.jobstart(term_cmd .. ' glow ' .. vim.fn.shellescape(file), { detach = true })
+  -- Open in a new gnome-terminal window with glow
+  vim.fn.jobstart('gnome-terminal -- glow ' .. vim.fn.shellescape(file), { detach = true })
   vim.notify('Opening preview in external terminal...', vim.log.levels.INFO)
 end, { desc = "Preview markdown in external terminal" })
 
@@ -166,7 +231,7 @@ end, { desc = "Export markdown to HTML" })
 
 -- Bootstrap lazy.nvim (modern Neovim plugin manager)
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
+if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
     "git", "clone", "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
@@ -261,12 +326,11 @@ require("lazy").setup({
   -- PYTHON PROFILE PLUGINS
   -- ===============================================
   
-  -- LSP Configuration & Plugins (latest versions)
+  -- LSP Configuration & Plugins (modern vim.lsp.config API)
   {
-    "neovim/nvim-lspconfig",
+    "williamboman/mason.nvim",
     ft = { "python", "sh", "bash", "cpp", "c", "rust", "html", "css" },
     dependencies = {
-      "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
     },
     config = function()
@@ -276,8 +340,13 @@ require("lazy").setup({
         automatic_installation = true,
       })
       
+      -- Use modern vim.lsp.config API (Neovim 0.11+)
+      
       -- Setup pyright LSP
-      require("lspconfig").pyright.setup({
+      vim.lsp.config.pyright = {
+        cmd = { 'pyright-langserver', '--stdio' },
+        filetypes = { 'python' },
+        root_markers = { 'pyproject.toml', 'setup.py', 'setup.cfg', 'requirements.txt', 'Pipfile', '.git' },
         settings = {
           python = {
             analysis = {
@@ -287,21 +356,27 @@ require("lazy").setup({
             },
           },
         },
-      })
+      }
       
       -- Setup bash-language-server LSP
-      require("lspconfig").bashls.setup({
-        filetypes = { "sh", "bash" },
-      })
+      vim.lsp.config.bashls = {
+        cmd = { 'bash-language-server', 'start' },
+        filetypes = { 'sh', 'bash' },
+        root_markers = { '.git' },
+      }
       
       -- Setup clangd LSP for C++
-      require("lspconfig").clangd.setup({
-        cmd = { "clangd", "--background-index", "--clang-tidy" },
-        filetypes = { "c", "cpp", "objc", "objcpp" },
-      })
+      vim.lsp.config.clangd = {
+        cmd = { 'clangd', '--background-index', '--clang-tidy' },
+        filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
+        root_markers = { 'compile_commands.json', 'compile_flags.txt', '.git' },
+      }
       
       -- Setup rust-analyzer LSP
-      require("lspconfig").rust_analyzer.setup({
+      vim.lsp.config['rust_analyzer'] = {
+        cmd = { 'rust-analyzer' },
+        filetypes = { 'rust' },
+        root_markers = { 'Cargo.toml', 'rust-project.json', '.git' },
         settings = {
           ["rust-analyzer"] = {
             cargo = {
@@ -312,16 +387,41 @@ require("lazy").setup({
             },
           },
         },
-      })
+      }
       
       -- Setup HTML LSP
-      require("lspconfig").html.setup({
-        filetypes = { "html" },
-      })
+      vim.lsp.config.html = {
+        cmd = { 'vscode-html-language-server', '--stdio' },
+        filetypes = { 'html' },
+        root_markers = { 'package.json', '.git' },
+      }
       
       -- Setup CSS LSP
-      require("lspconfig").cssls.setup({
-        filetypes = { "css", "scss", "less" },
+      vim.lsp.config.cssls = {
+        cmd = { 'vscode-css-language-server', '--stdio' },
+        filetypes = { 'css', 'scss', 'less' },
+        root_markers = { 'package.json', '.git' },
+      }
+      
+      -- Enable LSP servers via autocmd
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = { 'python', 'sh', 'bash', 'c', 'cpp', 'rust', 'html', 'css' },
+        callback = function(args)
+          local servers = {
+            python = 'pyright',
+            sh = 'bashls',
+            bash = 'bashls',
+            c = 'clangd',
+            cpp = 'clangd',
+            rust = 'rust_analyzer',
+            html = 'html',
+            css = 'cssls',
+          }
+          local server = servers[vim.bo[args.buf].filetype]
+          if server then
+            vim.lsp.enable(server)
+          end
+        end,
       })
     end,
   },
@@ -421,17 +521,37 @@ require("lazy").setup({
   -- SHELL SCRIPT PROFILE PLUGINS
   -- ===============================================
   
-  -- ShellCheck linter integration (using none-ls, fork of null-ls)
+  -- ShellCheck linter integration (using nvim-lint instead of null-ls)
   {
-    "nvimtools/none-ls.nvim",
+    "mfussenegger/nvim-lint",
     ft = { "sh", "bash" },
-    dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
-      local null_ls = require("null-ls")
-      null_ls.setup({
-        sources = {
-          null_ls.builtins.diagnostics.shellcheck,
-          null_ls.builtins.formatting.shfmt,
+      require('lint').linters_by_ft = {
+        sh = {'shellcheck'},
+        bash = {'shellcheck'},
+      }
+      
+      -- Only run lint if shellcheck is available
+      vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter" }, {
+        pattern = { "*.sh", "*.bash" },
+        callback = function()
+          if vim.fn.executable('shellcheck') == 1 then
+            require("lint").try_lint()
+          end
+        end,
+      })
+    end,
+  },
+  
+  -- Shell formatting with shfmt
+  {
+    "stevearc/conform.nvim",
+    ft = { "sh", "bash" },
+    config = function()
+      require("conform").setup({
+        formatters_by_ft = {
+          sh = { "shfmt" },
+          bash = { "shfmt" },
         },
       })
     end,
