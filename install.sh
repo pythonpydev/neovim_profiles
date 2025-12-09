@@ -141,11 +141,8 @@ if ! command -v shfmt &> /dev/null; then
         GO111MODULE=on go install mvdan.cc/sh/v3/cmd/shfmt@latest
         print_success "shfmt installed via Go"
     else
-        print_info "Go not found, downloading shfmt binary..."
-        wget -O /tmp/shfmt https://github.com/mvdan/sh/releases/latest/download/shfmt_v3.8.0_linux_amd64
-        chmod +x /tmp/shfmt
-        sudo mv /tmp/shfmt /usr/local/bin/
-        print_success "shfmt installed"
+        print_info "Go not found, shfmt will be installed via Mason in Neovim"
+        print_success "shfmt will be available after first Neovim launch"
     fi
 else
     print_success "shfmt already installed"
@@ -213,25 +210,9 @@ print_success "Plugins installed"
 print_header "Step 12: Final Setup"
 print_info "Installing LSP servers via Mason..."
 
-# Create a temporary Lua script to install LSP servers
-cat > /tmp/mason_install.lua << 'EOF'
-vim.cmd('autocmd User MasonToolsUpdateCompleted quitall')
-require('mason-tool-installer').setup({
-  ensure_installed = {
-    'pyright',
-    'bashls',
-    'clangd',
-    'rust_analyzer',
-    'html',
-    'cssls',
-  },
-  auto_update = false,
-  run_on_start = true,
-})
-EOF
-
-# Note: Mason will install on first real use
-print_info "LSP servers will be installed on first use of Neovim"
+# Note: Mason will auto-install LSP servers on first use
+print_info "LSP servers will be automatically installed when you open relevant file types"
+print_info "You can also manually install via :Mason command in Neovim"
 
 # Completion
 print_header "✨ Installation Complete!"
@@ -249,6 +230,6 @@ echo "  nvim test.py    # Test Python profile"
 echo "  nvim test.md    # Test Markdown profile"
 echo "  nvim test.html  # Test HTML profile"
 echo ""
-print_info "For help, see: https://github.com/YOUR_USERNAME/nvim_setup"
+print_info "For help, see: https://github.com/pythonpydev/nvim_setup"
 echo ""
 print_success "Happy coding! 🚀"

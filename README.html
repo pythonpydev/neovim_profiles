@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style>
+html {
+color: #1a1a1a;
+background-color: #fdfdfd;
+}
+body {
+margin: 0 auto;
+max-width: 36em;
+padding-left: 50px;
+padding-right: 50px;
+padding-top: 50px;
+padding-bottom: 50px;
+hyphens: auto;
+overflow-wrap: break-word;
+text-rendering: optimizeLegibility;
+font-kerning: normal;
+}
+@media (max-width: 600px) {
+body {
+font-size: 0.9em;
+padding: 12px;
+}
+h1 {
+font-size: 1.8em;
+}
+}
+@media print {
+html {
+background-color: white;
+}
+body {
+background-color: transparent;
+color: black;
+font-size: 12pt;
+}
+p, h2, h3 {
+orphans: 3;
+widows: 3;
+}
+h2, h3, h4 {
+page-break-after: avoid;
+}
+}
+p {
+margin: 1em 0;
+}
+a {
+color: #1a1a1a;
+}
+a:visited {
+color: #1a1a1a;
+}
+img {
+max-width: 100%;
+}
+h1, h2, h3, h4, h5, h6 {
+margin-top: 1.4em;
+}
+h5, h6 {
+font-size: 1em;
+font-style: italic;
+}
+h6 {
+font-weight: normal;
+}
+ol, ul {
+padding-left: 1.7em;
+margin-top: 1em;
+}
+li > ol, li > ul {
+margin-top: 0;
+}
+blockquote {
+margin: 1em 0 1em 1.7em;
+padding-left: 1em;
+border-left: 2px solid #e6e6e6;
+color: #606060;
+}
+code {
+font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+font-size: 85%;
+margin: 0;
+hyphens: manual;
+}
+pre {
+margin: 1em 0;
+overflow: auto;
+}
+pre code {
+padding: 0;
+overflow: visible;
+overflow-wrap: normal;
+}
+.sourceCode {
+background-color: transparent;
+overflow: visible;
+}
+hr {
+background-color: #1a1a1a;
+border: none;
+height: 1px;
+margin: 1em 0;
+}
+table {
+margin: 1em 0;
+border-collapse: collapse;
+width: 100%;
+overflow-x: auto;
+display: block;
+font-variant-numeric: lining-nums tabular-nums;
+}
+table caption {
+margin-bottom: 0.75em;
+}
+tbody {
+margin-top: 0.5em;
+border-top: 1px solid #1a1a1a;
+border-bottom: 1px solid #1a1a1a;
+}
+th {
+border-top: 1px solid #1a1a1a;
+padding: 0.25em 0.5em 0.25em 0.5em;
+}
+td {
+padding: 0.125em 0.5em 0.25em 0.5em;
+}
+header {
+margin-bottom: 4em;
+text-align: center;
+}
+#TOC li {
+list-style: none;
+}
+#TOC ul {
+padding-left: 1.3em;
+}
+#TOC > ul {
+padding-left: 0;
+}
+#TOC a:not(:hover) {
+text-decoration: none;
+}
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } 
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } 
+code span.at { color: #204a87; } 
+code span.bn { color: #0000cf; } 
+code span.cf { color: #204a87; font-weight: bold; } 
+code span.ch { color: #4e9a06; } 
+code span.cn { color: #8f5902; } 
+code span.co { color: #8f5902; font-style: italic; } 
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } 
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } 
+code span.dt { color: #204a87; } 
+code span.dv { color: #0000cf; } 
+code span.er { color: #a40000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #0000cf; } 
+code span.fu { color: #204a87; font-weight: bold; } 
+code span.im { } 
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } 
+code span.kw { color: #204a87; font-weight: bold; } 
+code span.op { color: #ce5c00; font-weight: bold; } 
+code span.ot { color: #8f5902; } 
+code span.pp { color: #8f5902; font-style: italic; } 
+code span.sc { color: #ce5c00; font-weight: bold; } 
+code span.ss { color: #4e9a06; } 
+code span.st { color: #4e9a06; } 
+code span.va { color: #000000; } 
+code span.vs { color: #4e9a06; } 
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } 
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">README</h1>
+</header>
+<h1 id="neovim-multi-language-profile-setup">Neovim Multi-Language
+Profile Setup</h1>
+<p>A modern, auto-detecting Neovim configuration with intelligent
+profile switching for multiple programming languages and file types. No
+manual configuration needed - just open a file and the right tools
+activate automatically!</p>
+<h2 id="features">✨ Features</h2>
+<h3 id="auto-detecting-language-profiles">🚀 Auto-Detecting Language
+Profiles</h3>
+<p>This Neovim setup automatically loads the appropriate tools, LSP
+servers, and keybindings based on the file type you’re editing:</p>
+<table>
+<colgroup>
+<col style="width: 36%" />
+<col style="width: 39%" />
+<col style="width: 24%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Language/Type</th>
+<th>File Extensions</th>
+<th>Features</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>📝 <strong>Markdown</strong></td>
+<td><code>.md</code></td>
+<td>Glow preview, PDF/HTML export, custom syntax highlighting</td>
+</tr>
+<tr class="even">
+<td>🐍 <strong>Python</strong></td>
+<td><code>.py</code></td>
+<td>Pyright LSP, Black formatter, autocomplete, linting</td>
+</tr>
+<tr class="odd">
+<td>🐚 <strong>Shell</strong></td>
+<td><code>.sh</code>, <code>.bash</code></td>
+<td>Bash LSP, ShellCheck linting, shfmt formatting</td>
+</tr>
+<tr class="even">
+<td>⚙️ <strong>C/C++</strong></td>
+<td><code>.cpp</code>, <code>.c</code>, <code>.h</code></td>
+<td>Clangd LSP, CMake integration, auto-pairs</td>
+</tr>
+<tr class="odd">
+<td>📄 <strong>Text</strong></td>
+<td><code>.txt</code></td>
+<td>Distraction-free writing, spell check, word count</td>
+</tr>
+<tr class="even">
+<td>🦀 <strong>Rust</strong></td>
+<td><code>.rs</code></td>
+<td>rust-analyzer, cargo integration, clippy</td>
+</tr>
+<tr class="odd">
+<td>🌐 <strong>HTML</strong></td>
+<td><code>.html</code></td>
+<td>HTML LSP, Emmet, auto-close tags, browser preview</td>
+</tr>
+<tr class="even">
+<td>🎨 <strong>CSS</strong></td>
+<td><code>.css</code></td>
+<td>CSS LSP, live color preview, Emmet</td>
+</tr>
+</tbody>
+</table>
+<h3 id="global-features-all-file-types">🌍 Global Features (All File
+Types)</h3>
+<ul>
+<li><strong>File Explorer</strong>: nvim-tree with icons</li>
+<li><strong>Which-Key</strong>: Shows available keybindings when you
+pause</li>
+<li><strong>Treesitter</strong>: Advanced syntax highlighting</li>
+<li><strong>Modern UI</strong>: Clean, responsive interface</li>
+</ul>
+<hr />
+<h2 id="what-gets-installed">📦 What Gets Installed</h2>
+<h3 id="core-components">Core Components</h3>
+<ul>
+<li><strong>lazy.nvim</strong>: Modern plugin manager</li>
+<li><strong>Mason</strong>: LSP server installer</li>
+<li><strong>nvim-cmp</strong>: Autocompletion engine</li>
+<li><strong>LuaSnip</strong>: Snippet engine</li>
+<li><strong>Treesitter</strong>: Advanced syntax parsing</li>
+</ul>
+<h3 id="language-servers-lsp">Language Servers (LSP)</h3>
+<ul>
+<li><code>pyright</code> - Python</li>
+<li><code>bashls</code> - Bash/Shell</li>
+<li><code>clangd</code> - C/C++</li>
+<li><code>rust-analyzer</code> - Rust</li>
+<li><code>html</code> - HTML</li>
+<li><code>cssls</code> - CSS</li>
+</ul>
+<h3 id="additional-tools">Additional Tools</h3>
+<ul>
+<li><code>glow</code> - Markdown preview</li>
+<li><code>pandoc</code> - Markdown to PDF/HTML conversion</li>
+<li><code>shellcheck</code> - Shell script linting</li>
+<li><code>shfmt</code> - Shell script formatting</li>
+<li><code>black</code> - Python code formatting</li>
+</ul>
+<hr />
+<h2 id="quick-start">⚡ Quick Start</h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li><strong>Linux</strong> (Ubuntu/Debian-based recommended)</li>
+<li><strong>Git</strong> installed</li>
+<li><strong>curl</strong> installed</li>
+</ul>
+<h3 id="automated-installation">Automated Installation</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download the setup script</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-o</span> install.sh https://raw.githubusercontent.com/YOUR_USERNAME/nvim_setup/main/install.sh</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Make it executable</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x install.sh</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the installer</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">./install.sh</span></span></code></pre></div>
+<p>The script will: 1. Install Neovim (if not already installed) 2.
+Install dependencies (Node.js, Python, etc.) 3. Backup your existing
+Neovim config (if any) 4. Install this configuration 5. Install all
+plugins and LSP servers</p>
+<hr />
+<h2 id="manual-installation">🛠️ Manual Installation</h2>
+<h3 id="step-1-install-neovim-0.9.5">Step 1: Install Neovim 0.9.5+</h3>
+<h4 id="ubuntudebian">Ubuntu/Debian</h4>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> add-apt-repository ppa:neovim-ppa/unstable</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install neovim</span></code></pre></div>
+<h4 id="verify-installation">Verify Installation</h4>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nvim</span> <span class="at">--version</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Should show version 0.9.5 or higher</span></span></code></pre></div>
+<h3 id="step-2-install-required-dependencies">Step 2: Install Required
+Dependencies</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Essential build tools</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install build-essential git curl nodejs npm python3 python3-pip</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Markdown tools</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install pandoc texlive-latex-base texlive-latex-recommended</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Shell script tools</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install shellcheck</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Install shfmt</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="va">GO111MODULE</span><span class="op">=</span>on <span class="ex">go</span> install mvdan.cc/sh/v3/cmd/shfmt@latest</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Install glow (Markdown preview)</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mkdir <span class="at">-p</span> /etc/apt/keyrings</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://repo.charm.sh/apt/gpg.key <span class="kw">|</span> <span class="fu">sudo</span> gpg <span class="at">--dearmor</span> <span class="at">-o</span> /etc/apt/keyrings/charm.gpg</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *&quot;</span> <span class="kw">|</span> <span class="fu">sudo</span> tee /etc/apt/sources.list.d/charm.list</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt install glow</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Python tools</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="ex">pip3</span> install black</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co"># C++ tools (if needed)</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install clangd</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Rust (if needed)</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--proto</span> <span class="st">&#39;=https&#39;</span> <span class="at">--tlsv1.2</span> <span class="at">-sSf</span> https://sh.rustup.rs <span class="kw">|</span> <span class="fu">sh</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="ex">rustup</span> component add rust-analyzer</span></code></pre></div>
+<h3 id="step-3-backup-existing-config">Step 3: Backup Existing
+Config</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Backup your current Neovim config (if you have one)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> ~/.config/nvim ~/.config/nvim.backup</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> ~/.local/share/nvim ~/.local/share/nvim.backup</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> ~/.local/state/nvim ~/.local/state/nvim.backup</span></code></pre></div>
+<h3 id="step-4-install-this-configuration">Step 4: Install This
+Configuration</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clone this repository</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/YOUR_USERNAME/nvim_setup.git</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Neovim config directory</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/.config/nvim</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy the configuration</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> nvim_setup/init.lua ~/.config/nvim/</span></code></pre></div>
+<h3 id="step-5-install-plugins">Step 5: Install Plugins</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Start Neovim</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nvim</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># The plugin manager will auto-install on first run</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Once it opens, run:</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ex">:LazySync</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Wait for all plugins to install, then restart Neovim</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="ex">:qa</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Open Neovim again</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="ex">nvim</span></span></code></pre></div>
+<hr />
+<h2 id="usage-guide">📚 Usage Guide</h2>
+<h3 id="markdown-files-.md">Markdown Files (<code>.md</code>)</h3>
+<p><strong>Keybindings:</strong> - <code>F5</code> - Preview with Glow -
+<code>F6</code> - Export to PDF - <code>F7</code> - Export to HTML</p>
+<p><strong>Commands:</strong> - <code>:MarkdownPreview</code> -
+Side-by-side preview - <code>:MarkdownPDF</code> - Export to PDF -
+<code>:MarkdownHTML</code> - Export to HTML</p>
+<h3 id="python-files-.py">Python Files (<code>.py</code>)</h3>
+<p><strong>Keybindings:</strong> - <code>F5</code> - Run Python file -
+<code>F6</code> - Format with Black - <code>gd</code> - Go to definition
+- <code>K</code> - Show documentation - <code>&lt;leader&gt;rn</code> -
+Rename variable - <code>&lt;leader&gt;ca</code> - Code actions -
+<code>&lt;leader&gt;f</code> - Format code - <code>gr</code> - Show
+references</p>
+<h3 id="shell-scripts-.sh-.bash">Shell Scripts (<code>.sh</code>,
+<code>.bash</code>)</h3>
+<p><strong>Keybindings:</strong> - <code>F5</code> - Run script -
+<code>F6</code> - Check with shellcheck - <code>F7</code> - Make
+executable (chmod +x) - <code>gd</code> - Go to definition -
+<code>K</code> - Show hover info - <code>&lt;leader&gt;f</code> - Format
+with shfmt</p>
+<h3 id="cc-files-.cpp-.c-.h">C/C++ Files (<code>.cpp</code>,
+<code>.c</code>, <code>.h</code>)</h3>
+<p><strong>Keybindings:</strong> - <code>F5</code> - Compile and run -
+<code>F6</code> - Compile only - <code>F7</code> - Generate CMake -
+<code>F8</code> - Build with CMake - <code>gd</code> - Go to definition
+- <code>gD</code> - Go to declaration - <code>&lt;leader&gt;h</code> -
+Switch between .cpp and .h</p>
+<h3 id="text-files-.txt">Text Files (<code>.txt</code>)</h3>
+<p><strong>Keybindings:</strong> - <code>F5</code> - Toggle
+distraction-free mode (Goyo) - <code>F6</code> - Toggle paragraph focus
+(Limelight) - <code>F7</code> - Toggle spell check -
+<code>&lt;leader&gt;wc</code> - Show word count - <code>]s</code> - Next
+misspelled word - <code>[s</code> - Previous misspelled word -
+<code>z=</code> - Spelling suggestions</p>
+<h3 id="rust-files-.rs">Rust Files (<code>.rs</code>)</h3>
+<p><strong>Keybindings:</strong> - <code>F5</code> - cargo run -
+<code>F6</code> - cargo build - <code>F7</code> - cargo test -
+<code>F8</code> - cargo clippy - <code>&lt;leader&gt;rr</code> - Show
+runnables - <code>&lt;leader&gt;rc</code> - Open Cargo.toml</p>
+<h3 id="html-files-.html">HTML Files (<code>.html</code>)</h3>
+<p><strong>Keybindings:</strong> - <code>F5</code> - Open in browser -
+<code>Ctrl+Y,</code> - Expand Emmet abbreviation - <code>gd</code> - Go
+to definition - <code>&lt;leader&gt;f</code> - Format code</p>
+<p><strong>Emmet Examples:</strong> - Type <code>html:5</code> then
+<code>Ctrl+Y,</code> for HTML5 template - Type
+<code>div.container&gt;ul&gt;li*3</code> then <code>Ctrl+Y,</code> for
+nested structure</p>
+<h3 id="css-files-.css">CSS Files (<code>.css</code>)</h3>
+<p><strong>Keybindings:</strong> - <code>Ctrl+Y,</code> - Expand Emmet
+abbreviation - <code>gd</code> - Go to definition -
+<code>&lt;leader&gt;f</code> - Format code</p>
+<p><strong>Features:</strong> - Live color preview (color codes show as
+actual colors)</p>
+<h3 id="global-keybindings-all-files">Global Keybindings (All
+Files)</h3>
+<ul>
+<li><code>Ctrl+N</code> - Toggle file tree</li>
+<li><code>&lt;leader&gt;r</code> - Refresh file tree</li>
+<li><code>&lt;leader&gt;n</code> - Find current file in tree</li>
+<li><code>\</code> - Leader key (default)</li>
+</ul>
+<hr />
+<h2 id="customization">🔧 Customization</h2>
+<h3 id="change-leader-key">Change Leader Key</h3>
+<p>Edit <code>~/.config/nvim/init.lua</code> and add at the top:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode lua"><code class="sourceCode lua"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="va">vim</span><span class="op">.</span><span class="va">g</span><span class="op">.</span><span class="va">mapleader</span> <span class="op">=</span> <span class="st">&quot; &quot;</span>  <span class="co">-- Change leader to spacebar</span></span></code></pre></div>
+<h3 id="disable-a-profile">Disable a Profile</h3>
+<p>Comment out the unwanted profile section in
+<code>init.lua</code>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode lua"><code class="sourceCode lua"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Comment out the Python profile if you don&#39;t need it</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- vim.api.nvim_create_autocmd(&#39;FileType&#39;, {</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">--   pattern = &#39;python&#39;,</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">--   ...</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- })</span></span></code></pre></div>
+<h3 id="add-more-lsp-servers">Add More LSP Servers</h3>
+<p>In the <code>ensure_installed</code> section:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode lua"><code class="sourceCode lua"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="va">ensure_installed</span> <span class="op">=</span> <span class="op">{</span> <span class="st">&quot;pyright&quot;</span><span class="op">,</span> <span class="st">&quot;bashls&quot;</span><span class="op">,</span> <span class="st">&quot;clangd&quot;</span><span class="op">,</span> <span class="st">&quot;rust_analyzer&quot;</span><span class="op">,</span> <span class="st">&quot;html&quot;</span><span class="op">,</span> <span class="st">&quot;cssls&quot;</span><span class="op">,</span> <span class="st">&quot;YOUR_LSP_HERE&quot;</span> <span class="op">},</span></span></code></pre></div>
+<hr />
+<h2 id="troubleshooting">🐛 Troubleshooting</h2>
+<h3 id="plugin-installation-fails">Plugin Installation Fails</h3>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clear plugin cache and reinstall</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-rf</span> ~/.local/share/nvim/lazy/<span class="pp">*</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ex">nvim</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ex">:LazySync</span></span></code></pre></div>
+<h3 id="lsp-not-working">LSP Not Working</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check Mason status</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nvim</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">:Mason</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Manually install LSP server</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="ex">:MasonInstall</span> pyright</span></code></pre></div>
+<h3 id="treesitter-errors">Treesitter Errors</h3>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nvim</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">:TSUpdate</span></span></code></pre></div>
+<h3 id="neovim-version-too-old">Neovim Version Too Old</h3>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Upgrade to latest Neovim</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> add-apt-repository ppa:neovim-ppa/unstable</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt upgrade neovim</span></code></pre></div>
+<hr />
+<h2 id="file-structure">📝 File Structure</h2>
+<pre><code>~/.config/nvim/
+├── init.lua              # Main configuration file
+
+~/.local/share/nvim/
+├── lazy/                 # Installed plugins
+└── mason/                # Installed LSP servers</code></pre>
+<hr />
+<h2 id="contributing">🤝 Contributing</h2>
+<p>Contributions are welcome! Please feel free to submit a Pull
+Request.</p>
+<h3 id="adding-a-new-language-profile">Adding a New Language
+Profile</h3>
+<ol type="1">
+<li>Add LSP server to <code>ensure_installed</code></li>
+<li>Configure LSP in the lspconfig section</li>
+<li>Add file type to relevant plugins (<code>ft = { ... }</code>)</li>
+<li>Create autocmd for the new file type</li>
+<li>Define keybindings and settings</li>
+</ol>
+<hr />
+<h2 id="license">📜 License</h2>
+<p>MIT License - feel free to use and modify!</p>
+<hr />
+<h2 id="acknowledgments">🙏 Acknowledgments</h2>
+<p>Built with these amazing plugins: - <a href="https://github.com/folke/lazy.nvim">lazy.nvim</a> - Plugin manager
+- <a href="https://github.com/neovim/nvim-lspconfig">nvim-lspconfig</a>
+- LSP configurations - <a href="https://github.com/hrsh7th/nvim-cmp">nvim-cmp</a> - Autocompletion
+- <a href="https://github.com/nvim-treesitter/nvim-treesitter">nvim-treesitter</a>
+- Syntax highlighting - And many more incredible plugins!</p>
+<hr />
+<h2 id="support">📞 Support</h2>
+<p>If you encounter issues: 1. Check the <a href="#-troubleshooting">Troubleshooting</a> section 2. Open an issue on
+GitHub 3. Make sure you’re running Neovim 0.9.5+</p>
+<hr />
+<p><strong>Enjoy coding! 🚀</strong></p>
+</body>
+</html>

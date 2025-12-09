@@ -86,7 +86,7 @@ The script will:
 
 ## 🛠️ Manual Installation
 
-### Step 1: Install Neovim 0.9.5+
+### Step 1: Install Neovim 0.10.0+
 
 #### Ubuntu/Debian
 ```bash
@@ -98,7 +98,7 @@ sudo apt install neovim
 #### Verify Installation
 ```bash
 nvim --version
-# Should show version 0.9.5 or higher
+# Should show version 0.10.0 or higher
 ```
 
 ### Step 2: Install Required Dependencies
@@ -394,7 +394,7 @@ Built with these amazing plugins:
 If you encounter issues:
 1. Check the [Troubleshooting](#-troubleshooting) section
 2. Open an issue on GitHub
-3. Make sure you're running Neovim 0.9.5+
+3. Make sure you're running Neovim 0.10.0+
 
 ---
 

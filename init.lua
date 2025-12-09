@@ -1,11 +1,5 @@
 -- ~/.config/nvim/init.lua
 
--- Use existing Vim configuration
-vim.opt.runtimepath:prepend('~/.vim')
-vim.opt.runtimepath:append('~/.vim/after')
-vim.opt.packpath = vim.opt.runtimepath:get()[1]
-vim.cmd('source ~/.vimrc.backup')  -- Load old settings
-
 -- Override old F5/F6/F7 mappings with autocmd that runs after FileType
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'markdown',
@@ -101,8 +95,13 @@ vim.api.nvim_create_user_command('MarkdownPreviewExternal', function()
     return
   end
   local file = vim.fn.expand('%:p')
-  -- Open in a new gnome-terminal window with glow
-  vim.fn.jobstart('gnome-terminal -- glow ' .. vim.fn.shellescape(file), { detach = true })
+  -- Detect available terminal emulator and open with glow
+  local terminal = os.getenv("TERM_PROGRAM") or "xterm"
+  local term_cmd = vim.fn.executable("gnome-terminal") == 1 and "gnome-terminal --" 
+                or vim.fn.executable("xfce4-terminal") == 1 and "xfce4-terminal -e"
+                or vim.fn.executable("xterm") == 1 and "xterm -e"
+                or "x-terminal-emulator -e"
+  vim.fn.jobstart(term_cmd .. ' glow ' .. vim.fn.shellescape(file), { detach = true })
   vim.notify('Opening preview in external terminal...', vim.log.levels.INFO)
 end, { desc = "Preview markdown in external terminal" })
 
@@ -167,7 +166,7 @@ end, { desc = "Export markdown to HTML" })
 
 -- Bootstrap lazy.nvim (modern Neovim plugin manager)
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
     "git", "clone", "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
@@ -422,9 +421,9 @@ require("lazy").setup({
   -- SHELL SCRIPT PROFILE PLUGINS
   -- ===============================================
   
-  -- ShellCheck linter integration
+  -- ShellCheck linter integration (using none-ls, fork of null-ls)
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     ft = { "sh", "bash" },
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
