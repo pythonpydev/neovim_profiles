@@ -10,7 +10,7 @@ This Neovim setup automatically loads the appropriate tools, LSP servers, and ke
 
 | Language/Type | File Extensions | Features |
 |---------------|----------------|----------|
-| 📝 **Markdown** | `.md` | Glow preview, PDF/HTML export, custom syntax highlighting |
+| 📝 **Markdown** | `.md` | Live browser preview, PDF/HTML export, custom syntax highlighting |
 | 🐍 **Python** | `.py` | Pyright LSP, Black formatter, autocomplete, linting |
 | 🐚 **Shell** | `.sh`, `.bash` | Bash LSP, ShellCheck linting, shfmt formatting |
 | ⚙️ **C/C++** | `.cpp`, `.c`, `.h` | Clangd LSP, CMake integration, auto-pairs |
@@ -49,7 +49,7 @@ This Neovim setup automatically loads the appropriate tools, LSP servers, and ke
 - `cssls` - CSS
 
 ### Additional Tools
-- `glow` - Markdown preview
+- `markdown-preview.nvim` - Live browser-based markdown preview
 - `pandoc` - Markdown to PDF/HTML conversion
 - `shellcheck` - Shell script linting (optional)
 - `shfmt` - Shell script formatting (optional)
@@ -119,12 +119,6 @@ sudo apt install shellcheck
 # Install shfmt
 GO111MODULE=on go install mvdan.cc/sh/v3/cmd/shfmt@latest
 
-# Install glow (Markdown preview)
-sudo mkdir -p /etc/apt/keyrings
-curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
-echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
-sudo apt update && sudo apt install glow
-
 # Python tools
 pip3 install black
 
@@ -182,26 +176,23 @@ nvim
 ### Markdown Files (`.md`)
 
 **Keybindings:**
-- `F5` - Preview with Glow (scrollable side-by-side)
-  - `j`/`k` or arrow keys to scroll
-  - `gg` to jump to top, `G` to jump to bottom
-  - `Ctrl+d`/`Ctrl+u` for page down/up
-  - `r` to refresh preview
-  - `q` to close preview
+- `F5` - Live preview in browser (auto-updates as you type)
 - `F6` - Export to PDF (requires texlive-xetex for Unicode)
 - `F7` - Export to HTML
 
 **Commands:**
-- `:MarkdownPreview` - Side-by-side scrollable preview
-- `:MarkdownPreviewExternal` - Open in external terminal
+- `:MarkdownPreview` - Open live preview in browser
+- `:MarkdownPreviewStop` - Stop preview server
+- `:MarkdownPreviewToggle` - Toggle preview on/off
 - `:MarkdownPDF` - Export to PDF
 - `:MarkdownHTML` - Export to HTML
 
-**Preview Tips:**
-- Preview is fully scrollable - works with large documents
-- Renders with colors and formatting properly
-- Press `r` in the preview window to refresh after saving changes
-- No need to press Esc - immediately scrollable!
+**Preview Features:**
+- Live reload - changes appear instantly in browser
+- Synchronized scrolling between editor and preview
+- Compact spacing (minimal whitespace)
+- Light theme optimized for readability
+- Custom CSS for professional appearance
 
 ### Python Files (`.py`)
 

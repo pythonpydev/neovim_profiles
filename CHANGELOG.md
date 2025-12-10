@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.0] - 2025-12-10
+
+### Changed
+
+- **Switched from Glow to markdown-preview.nvim**
+  - Now uses browser-based live preview instead of terminal preview
+  - Real-time updates as you type
+  - Better whitespace control with custom CSS
+  - Synchronized scrolling between editor and browser
+  
+### Added
+
+- **Custom CSS for markdown preview**
+  - Compact spacing (reduced margins and padding)
+  - Professional light theme
+  - Better readability with optimized typography
+  - Custom styles at `~/.config/nvim/markdown-preview.css`
+
+### Improved
+
+- Better markdown preview experience with live reload
+- No more excessive whitespace in preview
+- Preview opens in default browser (more familiar interface)
+- Can keep preview open while editing multiple files
+
+### Removed
+
+- Glow dependency (terminal-based previewer)
+- `:MarkdownPreviewExternal` command (no longer needed)
+
+---
+
 ## [2.0.3] - 2025-12-09
 
 ### Fixed

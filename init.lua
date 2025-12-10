@@ -78,69 +78,8 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.cmd('highlight markdownUrl guifg=#0000FF gui=underline ctermfg=21 cterm=underline')
     
     -- Set our new mappings
-    -- F5: Preview (always light mode with black bold headings)
-    vim.keymap.set('n', '<F5>', function()
-      local file = vim.fn.expand('%:p')
-      local style_path = vim.fn.expand('~/.config/glow/styles/light-preview.json')
-      
-      -- Open preview in a new split
-      vim.cmd('botright vsplit')
-      local preview_win = vim.api.nvim_get_current_win()
-      local preview_buf = vim.api.nvim_create_buf(false, true)
-      vim.api.nvim_win_set_buf(preview_win, preview_buf)
-      
-      -- Set window options
-      vim.api.nvim_win_set_option(preview_win, 'number', false)
-      vim.api.nvim_win_set_option(preview_win, 'relativenumber', false)
-      vim.api.nvim_win_set_option(preview_win, 'wrap', true)
-      vim.api.nvim_win_set_option(preview_win, 'linebreak', true)
-      
-      -- Set white background
-      vim.api.nvim_win_set_option(preview_win, 'winhl', 'Normal:PreviewNormal,NormalNC:PreviewNormal')
-      vim.cmd('highlight PreviewNormal guifg=#000000 guibg=#FFFFFF ctermfg=16 ctermbg=231')
-      
-      -- Get glow output with proper terminal handling
-      local handle = io.popen('TERM=xterm-256color glow --style ' .. vim.fn.shellescape(style_path) .. ' ' .. vim.fn.shellescape(file) .. ' 2>&1')
-      local output = handle:read("*a")
-      handle:close()
-      
-      -- Split output into lines
-      local lines = {}
-      for line in output:gmatch("[^\r\n]+") do
-        table.insert(lines, line)
-      end
-      
-      -- Set buffer content
-      vim.api.nvim_buf_set_lines(preview_buf, 0, -1, false, lines)
-      
-      -- Make buffer read-only but scrollable
-      vim.api.nvim_buf_set_option(preview_buf, 'modifiable', false)
-      vim.api.nvim_buf_set_option(preview_buf, 'buftype', 'nofile')
-      vim.api.nvim_buf_set_option(preview_buf, 'bufhidden', 'wipe')
-      vim.api.nvim_buf_set_option(preview_buf, 'filetype', 'markdown-preview')
-      
-      -- Enable ANSI color codes rendering
-      vim.cmd('AnsiEsc')
-      
-      -- Add keybindings
-      vim.keymap.set('n', 'q', ':q<CR>', { buffer = preview_buf, silent = true, desc = "Close preview" })
-      vim.keymap.set('n', 'r', function()
-        -- Refresh preview
-        vim.api.nvim_buf_set_option(preview_buf, 'modifiable', true)
-        local h = io.popen('TERM=xterm-256color glow --style ' .. vim.fn.shellescape(style_path) .. ' ' .. vim.fn.shellescape(file) .. ' 2>&1')
-        local new_output = h:read("*a")
-        h:close()
-        local new_lines = {}
-        for line in new_output:gmatch("[^\r\n]+") do
-          table.insert(new_lines, line)
-        end
-        vim.api.nvim_buf_set_lines(preview_buf, 0, -1, false, new_lines)
-        vim.api.nvim_buf_set_option(preview_buf, 'modifiable', false)
-        vim.cmd('AnsiEsc')
-      end, { buffer = preview_buf, silent = true, desc = "Refresh preview" })
-      
-      vim.notify('Preview: j/k to scroll, r=refresh, q=quit', vim.log.levels.INFO)
-    end, { buffer = true, silent = true, desc = "Preview markdown" })
+    -- F5: Preview (browser-based with live reload)
+    vim.keymap.set('n', '<F5>', '<cmd>MarkdownPreview<CR>', { buffer = true, silent = true, desc = "Preview markdown in browser" })
     
     -- F6: PDF Export
     vim.keymap.set('n', '<F6>', function()
@@ -194,84 +133,11 @@ vim.api.nvim_create_autocmd('FileType', {
 -- USER COMMANDS (Alternative to F-keys)
 -- ===============================================
 
--- :MarkdownPreview - Preview with glow (side-by-side, scrollable)
-vim.api.nvim_create_user_command('MarkdownPreview', function()
-  if vim.bo.filetype ~= 'markdown' then
-    vim.notify('This command is only for markdown files', vim.log.levels.WARN)
-    return
-  end
-  local file = vim.fn.expand('%:p')
-  local style_path = vim.fn.expand('~/.config/glow/styles/light-preview.json')
-  
-  -- Open preview in a new split
-  vim.cmd('botright vsplit')
-  local preview_win = vim.api.nvim_get_current_win()
-  local preview_buf = vim.api.nvim_create_buf(false, true)
-  vim.api.nvim_win_set_buf(preview_win, preview_buf)
-  
-  -- Set window options
-  vim.api.nvim_win_set_option(preview_win, 'number', false)
-  vim.api.nvim_win_set_option(preview_win, 'relativenumber', false)
-  vim.api.nvim_win_set_option(preview_win, 'wrap', true)
-  vim.api.nvim_win_set_option(preview_win, 'linebreak', true)
-  
-  -- Set white background
-  vim.api.nvim_win_set_option(preview_win, 'winhl', 'Normal:PreviewNormal,NormalNC:PreviewNormal')
-  vim.cmd('highlight PreviewNormal guifg=#000000 guibg=#FFFFFF ctermfg=16 ctermbg=231')
-  
-  -- Get glow output
-  local handle = io.popen('TERM=xterm-256color glow --style ' .. vim.fn.shellescape(style_path) .. ' ' .. vim.fn.shellescape(file) .. ' 2>&1')
-  local output = handle:read("*a")
-  handle:close()
-  
-  -- Split into lines
-  local lines = {}
-  for line in output:gmatch("[^\r\n]+") do
-    table.insert(lines, line)
-  end
-  
-  -- Set buffer content
-  vim.api.nvim_buf_set_lines(preview_buf, 0, -1, false, lines)
-  
-  -- Make read-only
-  vim.api.nvim_buf_set_option(preview_buf, 'modifiable', false)
-  vim.api.nvim_buf_set_option(preview_buf, 'buftype', 'nofile')
-  vim.api.nvim_buf_set_option(preview_buf, 'bufhidden', 'wipe')
-  vim.api.nvim_buf_set_option(preview_buf, 'filetype', 'markdown-preview')
-  
-  -- Render ANSI colors
-  vim.cmd('AnsiEsc')
-  
-  -- Add keybindings
-  vim.keymap.set('n', 'q', ':q<CR>', { buffer = preview_buf, silent = true, desc = "Close preview" })
-  vim.keymap.set('n', 'r', function()
-    vim.api.nvim_buf_set_option(preview_buf, 'modifiable', true)
-    local h = io.popen('TERM=xterm-256color glow --style ' .. vim.fn.shellescape(style_path) .. ' ' .. vim.fn.shellescape(file) .. ' 2>&1')
-    local new_output = h:read("*a")
-    h:close()
-    local new_lines = {}
-    for line in new_output:gmatch("[^\r\n]+") do
-      table.insert(new_lines, line)
-    end
-    vim.api.nvim_buf_set_lines(preview_buf, 0, -1, false, new_lines)
-    vim.api.nvim_buf_set_option(preview_buf, 'modifiable', false)
-    vim.cmd('AnsiEsc')
-  end, { buffer = preview_buf, silent = true, desc = "Refresh preview" })
-  
-  vim.notify('Preview: j/k to scroll, r=refresh, q=quit', vim.log.levels.INFO)
-end, { desc = "Preview markdown with glow" })
-
--- :MarkdownPreviewExternal - Open in external terminal (best colors)
-vim.api.nvim_create_user_command('MarkdownPreviewExternal', function()
-  if vim.bo.filetype ~= 'markdown' then
-    vim.notify('This command is only for markdown files', vim.log.levels.WARN)
-    return
-  end
-  local file = vim.fn.expand('%:p')
-  -- Open in a new gnome-terminal window with glow
-  vim.fn.jobstart('gnome-terminal -- glow ' .. vim.fn.shellescape(file), { detach = true })
-  vim.notify('Opening preview in external terminal...', vim.log.levels.INFO)
-end, { desc = "Preview markdown in external terminal" })
+-- Remove the duplicate command wrappers - the plugin provides these natively
+-- Just document what's available:
+-- :MarkdownPreview - Start preview in browser
+-- :MarkdownPreviewStop - Stop the preview server  
+-- :MarkdownPreviewToggle - Toggle preview on/off
 
 -- :MarkdownPDF - Export to PDF
 vim.api.nvim_create_user_command('MarkdownPDF', function()
@@ -400,12 +266,36 @@ require("lazy").setup({
   -- MARKDOWN PROFILE PLUGINS
   -- ===============================================
   
-  -- Terminal markdown preview (glow) - only for markdown
+  -- Browser-based markdown preview with live reload
   {
-    "ellisonleao/glow.nvim",
+    "iamcco/markdown-preview.nvim",
     ft = "markdown",
-    config = true,
-    cmd = "Glow",
+    cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle" },
+    build = function()
+      vim.fn["mkdp#util#install"]()
+    end,
+    config = function()
+      vim.g.mkdp_auto_close = 0
+      vim.g.mkdp_refresh_slow = 0
+      vim.g.mkdp_theme = 'light'
+      vim.g.mkdp_page_title = '${name}'
+      vim.g.mkdp_preview_options = {
+        mkit = {},
+        katex = {},
+        uml = {},
+        maid = {},
+        disable_sync_scroll = 0,
+        sync_scroll_type = 'middle',
+        hide_yaml_meta = 1,
+        sequence_diagrams = {},
+        flowchart_diagrams = {},
+        content_editable = false,
+        disable_filename = 0,
+        toc = {}
+      }
+      -- Custom CSS to reduce whitespace
+      vim.g.mkdp_markdown_css = vim.fn.expand('~/.config/nvim/markdown-preview.css')
+    end,
   },
 
   -- ===============================================
